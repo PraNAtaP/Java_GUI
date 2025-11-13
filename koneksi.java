@@ -6,6 +6,7 @@ public class koneksi {
     private String url = "jdbc:mysql://localhost:3306/pbo_gui_kasir_toko";
     private String USER = "root";
     private String PASS = "";
+
     private Connection conn;
 
     public Connection getConnection() {
@@ -23,8 +24,4 @@ public class koneksi {
         return conn;
     }
 
-    public static void main(String[] args) {
-        koneksi k = new koneksi();
-        k.getConnection();
-    }
 }
