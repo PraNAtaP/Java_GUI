@@ -31,7 +31,9 @@ public class Menu extends JFrame {
         panelTombol.add(btnTransaksi);
         add(panelTombol, BorderLayout.CENTER);
 
-        btnPelanggan.addActionListener(e -> new FormProduk().setVisible(true));
+        btnProduk.addActionListener(e -> new FormProduk().setVisible(true));
+        btnPelanggan.addActionListener(e -> new FormPelanggan().setVisible(true));
+        btnTransaksi.addActionListener(e -> new FormTransaksi().setVisible(true));
     }
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
