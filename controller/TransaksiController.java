@@ -44,35 +44,36 @@ public class TransaksiController {
         this.view = view;
     }
 
-    public void loadInitialData() {
-        // Load Pelanggan
-        pelangganList = pelangganDAO.tampilData();
-        pelangganComboBoxModel.removeAllElements();
-        for (Pelanggan p : pelangganList) {
-            pelangganComboBoxModel.addElement(p.getId_pelanggan() + " - " + p.getNama_pelanggan());
+    public void loadInitialDataForCreate() {
+        if (pelangganComboBoxModel != null) {
+            pelangganList = pelangganDAO.tampilData();
+            pelangganComboBoxModel.removeAllElements();
+            for (Pelanggan p : pelangganList) {
+                pelangganComboBoxModel.addElement(p.getId_pelanggan() + " - " + p.getNama_pelanggan());
+            }
         }
-
-        // Load Produk
-        produkList = produkDAO.tampilData();
-        produkComboBoxModel.removeAllElements();
-        for (Produk p : produkList) {
-            produkComboBoxModel.addElement(p.getId_produk() + " - " + p.getNama_produk() + " (Stok: " + p.getStok() + ")");
+        if (produkComboBoxModel != null) {
+            produkList = produkDAO.tampilData();
+            produkComboBoxModel.removeAllElements();
+            for (Produk p : produkList) {
+                produkComboBoxModel.addElement(p.getId_produk() + " - " + p.getNama_produk() + " (Stok: " + p.getStok() + ")");
+            }
         }
-        
-        loadAllTransaksi();
     }
 
     public void loadAllTransaksi() {
-        transaksiList = transaksiDAO.getAllTransaksi();
-        transaksiTableModel.setRowCount(0);
-        for (Transaksi t : transaksiList) {
-            transaksiTableModel.addRow(new Object[]{
-                    t.getId_transaksi(),
-                    t.getNama_pelanggan(),
-                    t.getTanggal(),
-                    t.getTotal_harga(),
-                    t.getMetode_bayar()
-            });
+        if (transaksiTableModel != null) {
+            transaksiList = transaksiDAO.getAllTransaksi();
+            transaksiTableModel.setRowCount(0);
+            for (Transaksi t : transaksiList) {
+                transaksiTableModel.addRow(new Object[]{
+                        t.getId_transaksi(),
+                        t.getNama_pelanggan(),
+                        t.getTanggal(),
+                        t.getTotal_harga(),
+                        t.getMetode_bayar()
+                });
+            }
         }
     }
     
@@ -80,8 +81,7 @@ public class TransaksiController {
         if (selectedRow >= 0) {
             Transaksi selectedTransaksi = transaksiList.get(selectedRow);
             List<DetailTransaksi> detailItems = transaksiDAO.getDetailTransaksiById(selectedTransaksi.getId_transaksi());
-
-            // Assuming 'view' is the parent JFrame (FormTransaksi)
+            
             ViewDetailTransaksi detailView = new ViewDetailTransaksi(view, selectedTransaksi, detailItems);
             detailView.setVisible(true);
         }
@@ -158,7 +158,7 @@ public class TransaksiController {
             JOptionPane.showMessageDialog(null, "Transaksi berhasil disimpan dengan ID: " + idTransaksi);
             keranjang.clear();
             updateKeranjangTable();
-            loadInitialData(); // Refresh product stock in combobox
+            loadInitialDataForCreate(); 
         } else {
             JOptionPane.showMessageDialog(null, "Gagal menyimpan transaksi.", "Error", JOptionPane.ERROR_MESSAGE);
         }

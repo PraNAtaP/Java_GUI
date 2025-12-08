@@ -17,8 +17,6 @@ public class FormPelanggan extends JFrame {
 
     public FormPelanggan() {
         setTitle("Kelola Pelanggan");
-        setSize(600, 400);
-        setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(new BorderLayout());
 
@@ -44,6 +42,9 @@ public class FormPelanggan extends JFrame {
 
         add(panelInput, BorderLayout.NORTH);
 
+        tblPelanggan = new JTable(model);
+        add(new JScrollPane(tblPelanggan), BorderLayout.CENTER);
+
         JPanel panelButton = new JPanel();
         JButton btnTambah = new JButton("Tambah");
         JButton btnEdit = new JButton("Edit");
@@ -54,13 +55,13 @@ public class FormPelanggan extends JFrame {
         panelButton.add(btnEdit);
         panelButton.add(btnHapus);
         panelButton.add(btnRefresh);
-        add(panelButton, BorderLayout.CENTER);
-
-        tblPelanggan = new JTable(model);
-        add(new JScrollPane(tblPelanggan), BorderLayout.SOUTH);
+        add(panelButton, BorderLayout.SOUTH);
 
         // Load initial data
         pelangganController.loadData();
+
+        pack();
+        setLocationRelativeTo(null);
 
         // Event Listeners
         btnTambah.addActionListener(e -> tambahPelanggan());

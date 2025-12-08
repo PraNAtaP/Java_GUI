@@ -36,7 +36,7 @@ public class Menu extends JFrame {
         btnProduk.addActionListener(e -> new FormProduk().setVisible(true));
         btnPelanggan.addActionListener(e -> new FormPelanggan().setVisible(true));
         btnTransaksi.addActionListener(e -> new FormTransaksi().setVisible(true));
-        btnRiwayat.addActionListener(e -> new FormTransaksi().setVisible(true));
+        btnRiwayat.addActionListener(e -> new FormRiwayatTransaksi().setVisible(true));
     }
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {

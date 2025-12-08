@@ -17,8 +17,6 @@ public class FormProduk extends JFrame {
 
     public FormProduk() {
         setTitle("Kelola Produk");
-        setSize(600, 400);
-        setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(new BorderLayout());
 
@@ -44,6 +42,9 @@ public class FormProduk extends JFrame {
 
         add(panelInput, BorderLayout.NORTH);
 
+        tblProduk = new JTable(model);
+        add(new JScrollPane(tblProduk), BorderLayout.CENTER);
+        
         JPanel panelButton = new JPanel();
         JButton btnTambah = new JButton("Tambah");
         JButton btnEdit = new JButton("Edit");
@@ -54,13 +55,13 @@ public class FormProduk extends JFrame {
         panelButton.add(btnEdit);
         panelButton.add(btnHapus);
         panelButton.add(btnRefresh);
-        add(panelButton, BorderLayout.CENTER);
-
-        tblProduk = new JTable(model);
-        add(new JScrollPane(tblProduk), BorderLayout.SOUTH);
+        add(panelButton, BorderLayout.SOUTH);
 
         // Load initial data
         produkController.loadData();
+        
+        pack();
+        setLocationRelativeTo(null);
 
         // Event Listeners
         btnTambah.addActionListener(e -> tambahProduk());
