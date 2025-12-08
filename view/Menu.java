@@ -21,19 +21,22 @@ public class Menu extends JFrame {
         add(lblJudul, BorderLayout.NORTH);
 
 
-        JPanel panelTombol = new JPanel(new GridLayout(2, 3, 10, 10));
+        JPanel panelTombol = new JPanel(new GridLayout(2, 2, 10, 10));
         JButton btnProduk = new JButton("Data Produk");
         JButton btnPelanggan = new JButton("Data Pelanggan");
         JButton btnTransaksi = new JButton("Transaksi Penjualan");
+        JButton btnRiwayat = new JButton("Riwayat Transaksi");
 
         panelTombol.add(btnProduk);
         panelTombol.add(btnPelanggan);
         panelTombol.add(btnTransaksi);
+        panelTombol.add(btnRiwayat);
         add(panelTombol, BorderLayout.CENTER);
 
         btnProduk.addActionListener(e -> new FormProduk().setVisible(true));
         btnPelanggan.addActionListener(e -> new FormPelanggan().setVisible(true));
         btnTransaksi.addActionListener(e -> new FormTransaksi().setVisible(true));
+        btnRiwayat.addActionListener(e -> new FormTransaksi().setVisible(true));
     }
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {

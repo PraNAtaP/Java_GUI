@@ -1,35 +1,37 @@
 package view;
 
 import controller.TransaksiController;
-import model.Pelanggan;
-import model.Produk;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class FormTransaksi extends JFrame {
     private JComboBox<String> cmbPelanggan, cmbProduk;
     private JTextField txtJumlah;
-    private JTable tblKeranjang;
-    private DefaultTableModel modelKeranjang;
+    private JTable tblKeranjang, tblTransaksi;
+    private DefaultTableModel modelKeranjang, modelTransaksi;
     private JLabel lblTotal;
     private TransaksiController transaksiController;
 
     public FormTransaksi() {
         setTitle("Transaksi Penjualan");
-        setSize(800, 600);
+        setSize(800, 700);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setLayout(new BorderLayout(10, 10));
+        
+        // --- Bagian Atas: Form untuk membuat transaksi baru ---
+        JPanel panelPembuatan = new JPanel(new BorderLayout(10, 10));
+        panelPembuatan.setBorder(BorderFactory.createTitledBorder("Buat Transaksi Baru"));
 
         // Initialize Controller and Models
         DefaultComboBoxModel<String> produkComboBoxModel = new DefaultComboBoxModel<>();
         DefaultComboBoxModel<String> pelangganComboBoxModel = new DefaultComboBoxModel<>();
         modelKeranjang = new DefaultTableModel(new String[]{"ID Produk", "Nama Produk", "Harga", "Jumlah", "Subtotal"}, 0);
-        transaksiController = new TransaksiController(produkComboBoxModel, pelangganComboBoxModel, modelKeranjang);
+        modelTransaksi = new DefaultTableModel(new String[]{"ID Transaksi", "Pelanggan", "Tanggal", "Total", "Metode Bayar"}, 0);
+
+        transaksiController = new TransaksiController(produkComboBoxModel, pelangganComboBoxModel, modelKeranjang, modelTransaksi, this);
 
         // Top Panel: Pelanggan and Produk Selection
         JPanel panelAtas = new JPanel(new GridLayout(2, 2, 5, 5));
@@ -41,7 +43,7 @@ public class FormTransaksi extends JFrame {
         panelAtas.add(new JLabel("Pilih Produk:"));
         cmbProduk = new JComboBox<>(produkComboBoxModel);
         panelAtas.add(cmbProduk);
-        add(panelAtas, BorderLayout.NORTH);
+        panelPembuatan.add(panelAtas, BorderLayout.NORTH);
 
         // Center Panel: Add to Cart
         JPanel panelTengah = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -58,7 +60,7 @@ public class FormTransaksi extends JFrame {
         // Cart Table
         tblKeranjang = new JTable(modelKeranjang);
         panelKeranjang.add(new JScrollPane(tblKeranjang), BorderLayout.CENTER);
-        add(panelKeranjang, BorderLayout.CENTER);
+        panelPembuatan.add(panelKeranjang, BorderLayout.CENTER);
 
         // Bottom Panel: Total and Save Button
         JPanel panelBawah = new JPanel(new BorderLayout());
@@ -69,7 +71,19 @@ public class FormTransaksi extends JFrame {
 
         JButton btnSimpan = new JButton("Simpan Transaksi");
         panelBawah.add(btnSimpan, BorderLayout.EAST);
-        add(panelBawah, BorderLayout.SOUTH);
+        panelPembuatan.add(panelBawah, BorderLayout.SOUTH);
+
+        // --- Bagian Bawah: Tabel untuk menampilkan daftar transaksi ---
+        JPanel panelList = new JPanel(new BorderLayout());
+        panelList.setBorder(BorderFactory.createTitledBorder("Riwayat Transaksi"));
+        tblTransaksi = new JTable(modelTransaksi);
+        panelList.add(new JScrollPane(tblTransaksi), BorderLayout.CENTER);
+
+        // --- Split Pane untuk menggabungkan keduanya ---
+        JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, panelPembuatan, panelList);
+        splitPane.setDividerLocation(350);
+        add(splitPane);
+
 
         // Load initial data
         transaksiController.loadInitialData();
@@ -81,6 +95,15 @@ public class FormTransaksi extends JFrame {
         });
 
         btnSimpan.addActionListener(e -> simpanTransaksi());
+
+        tblTransaksi.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) { // Double-click
+                    int selectedRow = tblTransaksi.getSelectedRow();
+                    transaksiController.showDetailTransaksi(selectedRow);
+                }
+            }
+        });
     }
 
     private void tambahKeKeranjang() {
@@ -108,6 +131,7 @@ public class FormTransaksi extends JFrame {
         if (metode != null) {
             transaksiController.simpanTransaksi(pelangganIndex, metode);
             updateTotal(); // Reset total label
+            transaksiController.loadAllTransaksi(); // Refresh transaction list
         }
     }
 }

@@ -8,6 +8,15 @@ public class Transaksi {
     private Date tanggal;
     private double total_harga;
     private String metode_bayar;
+    private String nama_pelanggan;
+
+    public String getNama_pelanggan() {
+        return nama_pelanggan;
+    }
+
+    public void setNama_pelanggan(String nama_pelanggan) {
+        this.nama_pelanggan = nama_pelanggan;
+    }
 
     public int getId_transaksi() {
         return id_transaksi;

@@ -7,6 +7,7 @@ import model.DetailTransaksi;
 import model.Pelanggan;
 import model.Produk;
 import model.Transaksi;
+import view.ViewDetailTransaksi;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -24,17 +25,23 @@ public class TransaksiController {
     private DefaultComboBoxModel<String> produkComboBoxModel;
     private DefaultComboBoxModel<String> pelangganComboBoxModel;
     private DefaultTableModel keranjangTableModel;
+    private DefaultTableModel transaksiTableModel;
+    private List<Transaksi> transaksiList;
+    private JFrame view;
 
-    public TransaksiController(DefaultComboBoxModel<String> produkComboBoxModel, DefaultComboBoxModel<String> pelangganComboBoxModel, DefaultTableModel keranjangTableModel) {
+    public TransaksiController(DefaultComboBoxModel<String> produkComboBoxModel, DefaultComboBoxModel<String> pelangganComboBoxModel, DefaultTableModel keranjangTableModel, DefaultTableModel transaksiTableModel, JFrame view) {
         this.pelangganDAO = new PelangganDAO();
         this.produkDAO = new ProdukDAO();
         this.transaksiDAO = new TransaksiDAO();
         this.produkList = new ArrayList<>();
         this.pelangganList = new ArrayList<>();
+        this.transaksiList = new ArrayList<>();
         this.keranjang = new ArrayList<>();
         this.produkComboBoxModel = produkComboBoxModel;
         this.pelangganComboBoxModel = pelangganComboBoxModel;
         this.keranjangTableModel = keranjangTableModel;
+        this.transaksiTableModel = transaksiTableModel;
+        this.view = view;
     }
 
     public void loadInitialData() {
@@ -50,6 +57,33 @@ public class TransaksiController {
         produkComboBoxModel.removeAllElements();
         for (Produk p : produkList) {
             produkComboBoxModel.addElement(p.getId_produk() + " - " + p.getNama_produk() + " (Stok: " + p.getStok() + ")");
+        }
+        
+        loadAllTransaksi();
+    }
+
+    public void loadAllTransaksi() {
+        transaksiList = transaksiDAO.getAllTransaksi();
+        transaksiTableModel.setRowCount(0);
+        for (Transaksi t : transaksiList) {
+            transaksiTableModel.addRow(new Object[]{
+                    t.getId_transaksi(),
+                    t.getNama_pelanggan(),
+                    t.getTanggal(),
+                    t.getTotal_harga(),
+                    t.getMetode_bayar()
+            });
+        }
+    }
+    
+    public void showDetailTransaksi(int selectedRow) {
+        if (selectedRow >= 0) {
+            Transaksi selectedTransaksi = transaksiList.get(selectedRow);
+            List<DetailTransaksi> detailItems = transaksiDAO.getDetailTransaksiById(selectedTransaksi.getId_transaksi());
+
+            // Assuming 'view' is the parent JFrame (FormTransaksi)
+            ViewDetailTransaksi detailView = new ViewDetailTransaksi(view, selectedTransaksi, detailItems);
+            detailView.setVisible(true);
         }
     }
 
