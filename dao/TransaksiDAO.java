@@ -21,10 +21,8 @@ public class TransaksiDAO {
         int idTransaksi = -1;
 
         try {
-            // Start transaction
             conn.setAutoCommit(false);
 
-            // Insert into transaksi table
             try (PreparedStatement stmtTransaksi = conn.prepareStatement(sqlTransaksi, Statement.RETURN_GENERATED_KEYS)) {
                 stmtTransaksi.setInt(1, transaksi.getId_pelanggan());
                 stmtTransaksi.setDate(2, new java.sql.Date(transaksi.getTanggal().getTime()));
@@ -40,7 +38,6 @@ public class TransaksiDAO {
                 }
             }
 
-            // Insert into detail_transaksi table
             try (PreparedStatement stmtDetail = conn.prepareStatement(sqlDetail)) {
                 for (DetailTransaksi detail : detailList) {
                     stmtDetail.setInt(1, idTransaksi);
@@ -51,7 +48,6 @@ public class TransaksiDAO {
                 stmtDetail.executeBatch();
             }
 
-            // Update product stock
             try (PreparedStatement stmtUpdateStok = conn.prepareStatement(sqlUpdateStok)) {
                 for (DetailTransaksi detail : detailList) {
                     stmtUpdateStok.setInt(1, detail.getJumlah());
@@ -61,18 +57,16 @@ public class TransaksiDAO {
                 stmtUpdateStok.executeBatch();
             }
 
-            // Commit transaction
             conn.commit();
 
         } catch (SQLException e) {
             e.printStackTrace();
             try {
-                // Rollback transaction on error
                 conn.rollback();
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
-            return -1; // Return -1 on failure
+            return -1; 
         } finally {
             try {
                 conn.setAutoCommit(true);

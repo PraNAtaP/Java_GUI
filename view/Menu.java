@@ -2,12 +2,8 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 
 public class Menu extends JFrame {
-    private JFrame frame;
-    private JTable table;
-    private JButton button;
     
     public Menu() {
         setTitle("Aplikasi Kasir Toko");

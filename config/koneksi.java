@@ -15,14 +15,9 @@ public class koneksi {
                 String user = "root";
                 String pass = "";
                 
-                // Load the MySQL JDBC driver
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 
-                // Attempt to establish a connection
                 conn = DriverManager.getConnection(url, user, pass);
-                
-                // Optional: Notify user of successful connection
-                // JOptionPane.showMessageDialog(null, "Koneksi ke Database Berhasil!");
                 
             } catch (ClassNotFoundException e) {
                 JOptionPane.showMessageDialog(null, "Driver MySQL tidak ditemukan! Pastikan library (JAR) sudah ditambahkan.\n" + e.getMessage(), "Connection Error", JOptionPane.ERROR_MESSAGE);
@@ -36,7 +31,6 @@ public class koneksi {
     }
 
     public static void main(String[] args) {
-        // Test the connection
         if (getConnection() != null) {
             System.out.println("Koneksi berhasil diuji.");
         } else {

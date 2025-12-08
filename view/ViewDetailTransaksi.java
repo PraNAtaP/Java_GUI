@@ -20,7 +20,6 @@ public class ViewDetailTransaksi extends JDialog {
         setLocationRelativeTo(parent);
         setLayout(new BorderLayout(10, 10));
 
-        // Top Panel for Transaction Info
         JPanel panelInfo = new JPanel(new GridLayout(3, 2, 5, 5));
         panelInfo.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
@@ -38,18 +37,16 @@ public class ViewDetailTransaksi extends JDialog {
 
         add(panelInfo, BorderLayout.NORTH);
 
-        // Center Panel for Details Table
         modelDetail = new DefaultTableModel(new String[]{"Nama Produk", "Harga", "Jumlah", "Subtotal"}, 0);
         tblDetail = new JTable(modelDetail);
         add(new JScrollPane(tblDetail), BorderLayout.CENTER);
 
-        // Populate data
         populateData(transaksi, detailItems);
     }
 
     private void populateData(Transaksi transaksi, List<DetailTransaksi> detailItems) {
         lblIdTransaksi.setText(String.valueOf(transaksi.getId_transaksi()));
-        lblNamaPelanggan.setText(transaksi.getNama_pelanggan()); // Assuming this is set in the Transaksi object
+        lblNamaPelanggan.setText(transaksi.getNama_pelanggan()); 
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         lblTanggal.setText(sdf.format(transaksi.getTanggal()));
 

@@ -57,13 +57,11 @@ public class FormPelanggan extends JFrame {
         panelButton.add(btnRefresh);
         add(panelButton, BorderLayout.SOUTH);
 
-        // Load initial data
         pelangganController.loadData();
 
         pack();
         setLocationRelativeTo(null);
 
-        // Event Listeners
         btnTambah.addActionListener(e -> tambahPelanggan());
         btnEdit.addActionListener(e -> ubahPelanggan());
         btnHapus.addActionListener(e -> hapusPelanggan());
@@ -124,12 +122,10 @@ public class FormPelanggan extends JFrame {
             JOptionPane.showMessageDialog(this, "Nama pelanggan tidak boleh kosong.", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        // Basic email validation
         if (!txtEmail.getText().trim().matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
             JOptionPane.showMessageDialog(this, "Format email tidak valid.", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        // Basic phone number validation
         if (!txtNoHp.getText().trim().matches("^\\+?[0-9. ()-]{7,25}$")) {
             JOptionPane.showMessageDialog(this, "Format nomor HP tidak valid.", "Error", JOptionPane.ERROR_MESSAGE);
             return false;

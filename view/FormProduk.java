@@ -57,13 +57,11 @@ public class FormProduk extends JFrame {
         panelButton.add(btnRefresh);
         add(panelButton, BorderLayout.SOUTH);
 
-        // Load initial data
         produkController.loadData();
         
         pack();
         setLocationRelativeTo(null);
-
-        // Event Listeners
+        
         btnTambah.addActionListener(e -> tambahProduk());
         btnEdit.addActionListener(e -> ubahProduk());
         btnHapus.addActionListener(e -> hapusProduk());

@@ -20,15 +20,12 @@ public class FormTransaksi extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(new BorderLayout(10, 10));
 
-        // Initialize Controller and Models
         DefaultComboBoxModel<String> produkComboBoxModel = new DefaultComboBoxModel<>();
         DefaultComboBoxModel<String> pelangganComboBoxModel = new DefaultComboBoxModel<>();
         modelKeranjang = new DefaultTableModel(new String[]{"ID Produk", "Nama Produk", "Harga", "Jumlah", "Subtotal"}, 0);
         
-        // Pass null for the models that are not used in this view
         transaksiController = new TransaksiController(produkComboBoxModel, pelangganComboBoxModel, modelKeranjang, null, this);
 
-        // Top Panel: Pelanggan and Produk Selection
         JPanel panelAtas = new JPanel(new GridLayout(2, 2, 5, 5));
         panelAtas.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         panelAtas.add(new JLabel("Pilih Pelanggan:"));
@@ -40,7 +37,6 @@ public class FormTransaksi extends JFrame {
         panelAtas.add(cmbProduk);
         add(panelAtas, BorderLayout.NORTH);
 
-        // Center Panel: Add to Cart
         JPanel panelTengah = new JPanel(new FlowLayout(FlowLayout.LEFT));
         panelTengah.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
         panelTengah.add(new JLabel("Jumlah:"));
@@ -52,12 +48,10 @@ public class FormTransaksi extends JFrame {
         JPanel panelKeranjang = new JPanel(new BorderLayout());
         panelKeranjang.add(panelTengah, BorderLayout.NORTH);
 
-        // Cart Table
         tblKeranjang = new JTable(modelKeranjang);
         panelKeranjang.add(new JScrollPane(tblKeranjang), BorderLayout.CENTER);
         add(panelKeranjang, BorderLayout.CENTER);
 
-        // Bottom Panel: Total and Save Button
         JPanel panelBawah = new JPanel(new BorderLayout());
         panelBawah.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         lblTotal = new JLabel("Total: Rp 0.0");
@@ -68,10 +62,8 @@ public class FormTransaksi extends JFrame {
         panelBawah.add(btnSimpan, BorderLayout.EAST);
         add(panelBawah, BorderLayout.SOUTH);
 
-        // Load initial data for combo boxes
         transaksiController.loadInitialDataForCreate();
 
-        // Event Listeners
         btnTambahKeranjang.addActionListener(e -> {
             tambahKeKeranjang();
             updateTotal();
@@ -104,8 +96,7 @@ public class FormTransaksi extends JFrame {
 
         if (metode != null) {
             transaksiController.simpanTransaksi(pelangganIndex, metode);
-            updateTotal(); // Reset total label
-            // No need to refresh transaction list here anymore
+            updateTotal(); 
         }
     }
 }
