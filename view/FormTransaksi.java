@@ -90,7 +90,7 @@ public class FormTransaksi extends JFrame {
 
     private void simpanTransaksi() {
         int pelangganIndex = cmbPelanggan.getSelectedIndex();
-        String[] metodeBayar = {"Tunai", "Kartu Kredit", "Transfer Bank"};
+        String[] metodeBayar = {"Tunai", "QRIS", "Transfer Bank"};
         String metode = (String) JOptionPane.showInputDialog(this, "Pilih metode pembayaran:",
                 "Metode Pembayaran", JOptionPane.QUESTION_MESSAGE, null, metodeBayar, metodeBayar[0]);
 

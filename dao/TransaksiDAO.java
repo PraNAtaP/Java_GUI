@@ -81,7 +81,7 @@ public class TransaksiDAO {
     public java.util.List<Transaksi> getAllTransaksi() {
         java.util.List<Transaksi> transaksiList = new java.util.ArrayList<>();
         String sql = "SELECT t.id_transaksi, t.id_pelanggan, p.nama_pelanggan, t.tanggal, t.total_harga, t.metode_bayar " +
-                     "FROM transaksi t JOIN pelanggan p ON t.id_pelanggan = p.id_pelanggan ORDER BY t.tanggal DESC";
+                     "FROM transaksi t JOIN pelanggan p ON t.id_pelanggan = p.id_pelanggan ORDER BY t.id_transaksi DESC";
         try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 Transaksi t = new Transaksi();

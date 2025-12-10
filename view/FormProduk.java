@@ -130,7 +130,7 @@ public class FormProduk extends JFrame {
                 return false;
             }
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Harga dan stok harus berupa angka.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Harga atau stok harus berupa angka.", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;

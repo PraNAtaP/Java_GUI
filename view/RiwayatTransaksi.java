@@ -7,19 +7,24 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class FormRiwayatTransaksi extends JFrame {
+public class RiwayatTransaksi extends JFrame {
     private JTable tblTransaksi;
     private DefaultTableModel modelTransaksi;
     private TransaksiController transaksiController;
 
-    public FormRiwayatTransaksi() {
+    public RiwayatTransaksi() {
         setTitle("Riwayat Transaksi");
         setSize(800, 600);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(new BorderLayout());
-
-        modelTransaksi = new DefaultTableModel(new String[]{"ID Transaksi", "Pelanggan", "Tanggal", "Total", "Metode Bayar"}, 0);
+        
+        modelTransaksi = new DefaultTableModel(new String[]{"ID Transaksi", "Pelanggan", "Tanggal", "Total", "Metode Bayar"}, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; 
+            }
+        };
     
         transaksiController = new TransaksiController(null, null, null, modelTransaksi, this);
         
