@@ -1,5 +1,5 @@
 package controller;
-
+// pelanggan controler
 import dao.PelangganDAO;
 import model.Pelanggan;
 

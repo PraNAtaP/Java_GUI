@@ -15,6 +15,7 @@ public class FormPelanggan extends JFrame {
     private PelangganController pelangganController;
     private JTextField txtId;
 
+    // Form Pelanggan
     public FormPelanggan() {
         setTitle("Kelola Pelanggan");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

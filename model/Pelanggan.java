@@ -1,5 +1,5 @@
 package model;
-
+// model pelanggan
 public class Pelanggan {
     private int id_pelanggan;
     private String nama_pelanggan;

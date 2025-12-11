@@ -1,5 +1,5 @@
 package dao;
-
+// dao pelanggan
 import config.koneksi;
 import model.Pelanggan;
 
