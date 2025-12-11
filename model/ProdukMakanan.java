@@ -1,5 +1,5 @@
 package model;
-
+//inheritance from Produk
 import java.util.Date;
 
 public class ProdukMakanan extends Produk {

@@ -1,12 +1,11 @@
 package view;
-
+//Produk Form GUI
 import controller.ProdukController;
-
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 public class FormProduk extends JFrame {
     private JTextField txtNama, txtHarga, txtStok;

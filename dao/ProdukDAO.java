@@ -1,5 +1,5 @@
 package dao;
-
+//produk DAO
 import config.koneksi;
 import model.Produk;
 

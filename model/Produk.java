@@ -1,5 +1,5 @@
 package model;
-
+//Produk Model
 public class Produk {
     private int id_produk;
     private String nama_produk;
